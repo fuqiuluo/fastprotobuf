@@ -12,8 +12,8 @@ fun main() {
 
 
     val face = obj[2].asList.first { elem ->
-        elem.asMap.let { 53 in it && it[53, 1].asNumber.toInt() == 33 }
+        elem.asMap.let { 53 in it && it[53, 1].asInt == 33 }
     }
-    println("表情ID: " + face.asMap[53, 2, 1].asNumber)
-    println("表情简介: " + face.asMap[53, 2, 2].asUtf8String)
+    println("表情ID: " + face[53, 2, 1].asInt)
+    println("表情简介: " + face[53, 2, 2].asUtf8String)
 }

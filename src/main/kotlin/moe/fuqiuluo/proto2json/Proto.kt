@@ -175,6 +175,12 @@ val Proto.asString: ByteString
 val Proto.asNumber: Number
     get() = (this as ProtoNumber).value
 
+val Proto.asInt: Int
+    get() = (this as ProtoNumber).value.toInt()
+
+val Proto.asLong: Long
+    get() = (this as ProtoNumber).value.toLong()
+
 val Proto.asMap: ProtoMap
     get() = (this as ProtoMap)
 
