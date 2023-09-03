@@ -13,7 +13,7 @@ val json = Json {
 }
 
 fun main() {
-    val obj = ProtoUtils.parseProto(pb)
+    val obj = ProtoUtils.decodeFromByteArray(pb)
     // 打印成json
     println(json.encodeToString(obj.toJson()))
 

@@ -1,15 +1,29 @@
 package moe.fuqiuluo.proto2json
 
+import com.google.protobuf.CodedOutputStream
+import com.google.protobuf.CodedOutputStream.computeTagSize
 import com.google.protobuf.UnknownFieldSet
 
 object ProtoUtils {
 
-    fun parseProto(data: ByteArray): ProtoMap {
+    fun decodeFromByteArray(data: ByteArray): ProtoMap {
         val unknownFieldSet = UnknownFieldSet.parseFrom(data)
         val dest = ProtoMap(hashMapOf())
         printUnknownFieldSet(unknownFieldSet, dest)
         return dest
     }
+
+    fun encodeToByteArray(protoMap: ProtoMap): ByteArray {
+        val size = protoMap.computeSizeDirectly()
+        val dest = ByteArray(size)
+        val output = CodedOutputStream.newInstance(dest)
+        protoMap.value.forEach { (tag, proto) ->
+            proto.writeTo(output, tag)
+        }
+        output.checkNoSpaceLeft()
+        return dest
+    }
+
 
     private fun printUnknownFieldSet(set: UnknownFieldSet, dest: ProtoMap) {
         set.asMap().forEach { (tag, field) ->
@@ -39,6 +53,5 @@ object ProtoUtils {
             }
         }
     }
-
 }
 
