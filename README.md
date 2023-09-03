@@ -40,6 +40,10 @@ val proto = ProtoMap()
 proto[2, 1, 2] = 1 
 // tag不能为0，这个是protobuf规范，别乱搞哦！
 
+proto[3] = {
+    it[1] = "66666666666"
+}
+
 proto[1, 2, 1] = "1372362033"
 proto[1, 2, 2] = byteArrayOf(1, 2, 3, 4)
 

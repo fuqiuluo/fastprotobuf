@@ -223,6 +223,12 @@ class ProtoMap(
         curProtoMap[tags.last()] = v
     }
 
+    operator fun set(vararg tags: Int, struct: (ProtoMap) -> Unit) {
+        val map = ProtoMap()
+        struct.invoke(map)
+        set(*tags, v = map)
+    }
+
     operator fun set(vararg tags: Int, v: String) {
         set(*tags, v = v.proto)
     }
