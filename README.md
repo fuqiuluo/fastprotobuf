@@ -36,7 +36,9 @@ println("表情简介: " + face[53, 2, 2].asUtf8String)
 ## 序列化数据
 
 ```kotlin
-val proto = ProtoMap()
+val proto = protobufOf {
+    it[4] = 7
+}
 proto[2, 1, 2] = 1 
 // tag不能为0，这个是protobuf规范，别乱搞哦！
 

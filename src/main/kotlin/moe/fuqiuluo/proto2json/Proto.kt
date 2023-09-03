@@ -5,6 +5,8 @@ import com.google.protobuf.CodedOutputStream
 import com.google.protobuf.WireFormat
 import kotlinx.serialization.json.JsonElement
 
+typealias Protobuf = ProtoMap
+
 sealed interface Proto {
     fun toJson(): JsonElement
 
@@ -356,3 +358,11 @@ val Proto.asByteArray: ByteArray
 
 val Proto.asUtf8String: String
     get() = (this as ProtoByteString).toUtfString()
+
+fun protobufOf(struct: (ProtoMap) -> Unit): ProtoMap {
+    val map = ProtoMap()
+    struct.invoke(map)
+    return map
+}
+
+

@@ -1,13 +1,16 @@
 package net.oicq
 
-import moe.fuqiuluo.proto2json.ProtoMap
+import moe.fuqiuluo.proto2json.Protobuf
+import moe.fuqiuluo.proto2json.protobufOf
 import moe.fuqiuluo.proto2json.toHexString
 import kotlin.system.measureTimeMillis
 
 fun main() {
     println(measureTimeMillis {
         repeat(1) {
-            val proto = ProtoMap()
+            val proto = protobufOf {
+                it[4] = 7
+            }
             proto[2, 1, 2] = 1
 
             proto[3] = {
