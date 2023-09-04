@@ -36,32 +36,53 @@ println("表情简介: " + face[53, 2, 2].asUtf8String)
 ## 序列化数据
 
 ```kotlin
-val proto = protobufOf {
-    it[4] = 7
-}
-proto[2, 1, 2] = 1 
-// tag不能为0，这个是protobuf规范，别乱搞哦！
-
-proto[3] = {
-    it[1] = "66666666666"
-}
-
-proto[1, 2, 1] = "1372362033"
-proto[1, 2, 2] = byteArrayOf(1, 2, 3, 4)
-
-// proto[1][2][3] = 1
-// 这可能是一个错误写法，这样你可能会得到空指针错误
-
-proto[1, 3, 1] = arrayOf(
-    "TestList",
-    "TestList2"
-)
-proto[1, 3, 2] = arrayOf(
-    666, 7777
-)
-
+val proto = Protobuf()
+proto[1] = 10086
 println(proto.toByteArray().toHexString())
 ```
+
+这样貌似也可以，就是非常可惜，不够美观！
+
+```kotlin
+val proto = protobufMapOf {
+    it[1] = 10086
+}
+println(proto.toByteArray().toHexString())
+```
+
+这样简单的提升了美观性，但是RepeatedField的处理还是不够好。
+
+```kotlin
+val proto = protobufMapOf {
+    it[1] = arrayOf(1, 2, 3, 4)
+}
+println(proto.toByteArray().toHexString())
+```
+
+这样就实现了RepeatedField的处理，但是还是不够美观，那么复杂一点的结构呢？
+
+```kotlin
+val proto = protobufMapOf {
+    it[1, 2, 4] = arrayOf(1, 2, 3, 4)
+}
+println(proto.toByteArray().toHexString())
+```
+
+这样就实现了，稍微复杂一点的结构，但是我觉得这种是很垃圾的写法。
+
+```kotlin
+val proto = protobufOf(
+    1 to 2 to 3 to "666", 
+    2 to 1,
+    3 to arrayOf("1111111")
+)
+println(proto.toByteArray().toHexString())
+// 单次运行耗时  100ms
+// 1W次运行耗时  120ms
+// 100W次运行耗时640ms
+```
+
+究极形态，固然这个项目就是整活，但是也绝非效率非常的低，JVM的逃逸分析可以降低大量的分配/GC消耗。
 
 # 测试构建数据
 

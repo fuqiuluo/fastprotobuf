@@ -10,7 +10,7 @@ fun main() {
     // 打印成json
     println(json.encodeToString(obj.toJson()))
 
-    val face = obj[2].asList.first { elem ->
+    val face = obj[2].asList.value.first { elem ->
         elem.asMap.let { 53 in it && it[53, 1].asInt == 33 }
     }
     println("表情ID: " + face[53, 2, 1].asInt)
