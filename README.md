@@ -26,11 +26,20 @@ val obj = ProtoUtils.decodeFromByteArray(pb3)
 // 打印成json
 println(json.encodeToString(obj.toJson()))
 
-val face = obj[2].asList.first { elem ->
+val face = obj[2].asList.value.first { elem ->
     elem.asMap.let { 53 in it && it[53, 1].asInt == 33 }
 }
 println("表情ID: " + face[53, 2, 1].asInt)
 println("表情简介: " + face[53, 2, 2].asUtf8String)
+```
+
+判断数据的有无
+
+```kotlin
+val obj = ProtoUtils.decodeFromByteArray(pb3)
+if( obj.has(1, 2, 3) ) {
+    // do something
+}
 ```
 
 ## 序列化数据
