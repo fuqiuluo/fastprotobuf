@@ -8,7 +8,7 @@ import kotlin.system.measureTimeMillis
 
 fun main() {
     println(measureTimeMillis {
-        repeat(100_0000) {
+        repeat(1) {
             val proto = protobufOf(
                 1 to 2 to 3 to "666",
                 2 to 1
